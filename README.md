@@ -1,7 +1,12 @@
 # python-architecture-lab-week-02
 
 [![Python](https://img.shields.io/badge/python-3.14-blue.svg)](https://www.python.org/)
+[![PyPI](https://img.shields.io/pypi/v/math-utils.svg)](https://pypi.org/project/math-utils/)
+[![PyPI - Downloads](https://img.shields.io/pypi/dm/math-utils.svg)](https://pypi.org/project/math-utils/)
+[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/math-utils.svg)](https://pypi.org/project/math-utils/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![CI](https://github.com/JalaU-Labs/python-architecture-lab-week-02/actions/workflows/ci.yml/badge.svg)](https://github.com/JalaU-Labs/python-architecture-lab-week-02/actions/workflows/ci.yml)
+[![Docs](https://github.com/JalaU-Labs/python-architecture-lab-week-02/actions/workflows/docs.yml/badge.svg)](https://github.com/JalaU-Labs/python-architecture-lab-week-02/actions/workflows/docs.yml)
 [![Code style: ruff](https://img.shields.io/badge/code%20style-ruff-000000.svg)](https://github.com/astral-sh/ruff)
 [![Type checked: mypy](https://img.shields.io/badge/type%20checked-mypy-blue.svg)](https://mypy-lang.org/)
 
@@ -16,11 +21,15 @@ comprehensive testing, and reproducible tooling.
 - Pure, side-effect-free mathematical functions in a dedicated core layer.
 - Strict static typing enforced by `mypy` with `py.typed` marker (PEP 561).
 - Command-line interface built on the standard library `argparse`.
-- Comprehensive test suite powered by `pytest`.
+- Comprehensive test suite powered by `pytest` with 100% line and branch coverage.
 - Deterministic dependency management via `uv` and `uv.lock`.
 - Linting and formatting with `ruff`.
 - Reproducible container image built with a multi-stage `Dockerfile`
   and published to the GitHub Container Registry.
+- Published on PyPI as `math-utils`.
+- Documentation site built with MkDocs and Material, deployed to both
+  GitHub Pages and GitLab Pages.
+- Continuous integration on GitHub Actions and GitLab CI.
 - Convenience targets for common workflows via `Makefile`.
 
 ## Project Structure
@@ -43,13 +52,24 @@ comprehensive testing, and reproducible tooling.
 │   ├── test_arithmetic.py
 │   ├── test_cli.py
 │   └── test_statistics.py
+├── docs/
+│   ├── api.md
+│   ├── examples.md
+│   ├── index.md
+│   └── quickstart.md
+├── .github/workflows/
+│   ├── ci.yml
+│   ├── docs.yml
+│   └── publish.yml
 ├── .dockerignore
 ├── .gitignore
 ├── .python-version
+├── CONTRIBUTING.md
 ├── Dockerfile
 ├── docker-compose.yml
 ├── LICENSE
 ├── Makefile
+├── mkdocs.yml
 ├── pyproject.toml
 ├── README.md
 └── uv.lock
@@ -64,13 +84,26 @@ test and reuse.
 ## Requirements
 
 - Python 3.14 or newer
-- [uv](https://github.com/astral-sh/uv) 0.13 or newer
+- [uv](https://github.com/astral-sh/uv) 0.13 or newer (for development)
 - Docker 29 or newer (only for container workflows)
 
 ## Installation
 
-Clone the repository and install the project in editable mode together
-with its development dependencies:
+### From PyPI
+
+The package is published on PyPI. Install it with `pip` or `uv`:
+
+```bash
+pip install math-utils
+```
+
+```bash
+uv add math-utils
+```
+
+### From source
+
+Clone the repository and install it in editable mode with `uv`:
 
 ```bash
 git clone git@gitlab.com:jala-university1/cohort-5/ES.CSSD-245.GA.T2.26.M2/SD/group-b/individual-laboratories/alejandro-botina/week-02/python-architecture-lab-week-02.git
@@ -82,14 +115,24 @@ uv sync
 
 ### Command-line interface
 
-The package exposes a `math-utils` console script and the equivalent
-module entry point:
+The package exposes a `math-utils` console script:
 
 ```bash
-uv run math-utils factorial 5
-uv run math-utils is-prime 97
-uv run math-utils mean 1 2 3 4 5
-uv run python -m math_utils median 3 1 4 1 5 9 2 6
+math-utils factorial 5
+# 120
+
+math-utils is-prime 97
+# true
+
+math-utils mean 1 2 3 4 5
+# 3.0
+```
+
+The equivalent module entry point works as well:
+
+```bash
+python -m math_utils median 3 1 4 1 5 9 2 6
+# 3.5
 ```
 
 ### Library
@@ -101,6 +144,15 @@ assert factorial(5) == 120
 assert is_prime(97) is True
 assert mean([1, 2, 3, 4, 5]) == 3.0
 ```
+
+## Documentation
+
+The full documentation is available at:
+
+- GitHub Pages: [https://jalau-labs.github.io/python-architecture-lab-week-02/](https://jalau-labs.github.io/python-architecture-lab-week-02/)
+- GitLab Pages: [https://jala-university1.pages.gitlab.com/cohort-5/ES.CSSD-245.GA.T2.26.M2/SD/group-b/individual-laboratories/alejandro-botina/week-02/python-architecture-lab-week-02/](https://jala-university1.pages.gitlab.com/cohort-5/ES.CSSD-245.GA.T2.26.M2/SD/group-b/individual-laboratories/alejandro-botina/week-02/python-architecture-lab-week-02/)
+
+It covers installation, the CLI, the full API reference, and examples.
 
 ## Development
 
@@ -114,7 +166,8 @@ make test
 ```
 
 This executes `pytest` against the `tests/` directory with coverage
-reporting enabled.
+reporting enabled. The project enforces 100% line and branch coverage on
+the `math_utils` package.
 
 ### Linting and formatting
 
@@ -127,6 +180,13 @@ make format    # ruff format
 
 ```bash
 make typecheck # mypy src
+```
+
+### Documentation
+
+```bash
+make docs-serve   # serve with live reload at http://127.0.0.1:8000
+make docs-build   # build the static site into site/
 ```
 
 ### Cleaning build artifacts
@@ -151,8 +211,7 @@ Run the CLI directly with the published image:
 
 ```bash
 docker run --rm ghcr.io/jalau-labs/python-architecture-lab-week-02:latest factorial 5
-docker run --rm ghcr.io/jalau-labs/python-architecture-lab-week-02:latest is-prime 97
-docker run --rm ghcr.io/jalau-labs/python-architecture-lab-week-02:latest mean 1 2 3 4 5
+# 120
 ```
 
 The following tags are published:
@@ -169,15 +228,11 @@ to `docker run` is forwarded directly to the CLI.
 
 ### Build the image locally
 
-Build the runtime image:
-
 ```bash
 docker build -t math-utils:latest .
 ```
 
 ### Run with Docker Compose
-
-Run the CLI through Docker Compose using the locally built image:
 
 ```bash
 docker compose run --rm math-utils factorial 10
@@ -186,6 +241,25 @@ docker compose run --rm math-utils factorial 10
 The image is built using a multi-stage `Dockerfile`: the first stage
 installs dependencies with `uv` into a virtual environment, and the final
 stage copies only the runtime artifacts into a slim base image.
+
+## Continuous Integration
+
+Every push to `main` and every merge request triggers:
+
+| Platform | Pipeline | Jobs |
+| --- | --- | --- |
+| GitHub Actions | `ci.yml` | lint, format, typecheck, test, publish image to GHCR |
+| GitHub Actions | `docs.yml` | build and deploy to GitHub Pages |
+| GitHub Actions | `publish.yml` | build and publish to PyPI on `v*` tags |
+| GitLab CI | `.gitlab-ci.yml` | docs (Pages), lint, format, typecheck, test |
+
+Both platforms enforce the same quality gate: `ruff check`, `ruff format --check`,
+`mypy`, and `pytest` with 100% coverage.
+
+## Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for the full workflow: cloning,
+running tests, code style, and submitting changes.
 
 ## License
 
