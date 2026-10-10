@@ -1,10 +1,10 @@
 services:
-  math-utils:
+  math-toolkit-jala:
     build:
       context: .
       dockerfile: Dockerfile
-    image: math-utils:latest
-    container_name: math-utils
-    # The image already sets ENTRYPOINT ["math-utils"]. Passing arguments via
-    # `docker compose run --rm math-utils <args>` overrides CMD only, keeping
+    image: math-toolkit-jala:latest
+    container_name: math-toolkit-jala
+    # The image already sets ENTRYPOINT ["math-toolkit-jala"]. Passing arguments via
+    # `docker compose run --rm math-toolkit-jala <args>` overrides CMD only, keeping
     # the entrypoint intact.

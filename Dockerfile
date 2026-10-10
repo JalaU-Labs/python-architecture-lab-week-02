@@ -47,5 +47,5 @@ ENV PATH="/app/.venv/bin:$PATH" \
 WORKDIR /app
 USER app
 
-ENTRYPOINT ["math-utils"]
+ENTRYPOINT ["math-toolkit-jala"]
 CMD ["--help"]

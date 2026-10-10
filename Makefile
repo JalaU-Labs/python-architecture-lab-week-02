@@ -3,7 +3,7 @@
 UV         ?= uv
 SRC_DIR    := src
 TEST_DIR   := tests
-IMAGE_NAME := math-utils
+IMAGE_NAME := math-toolkit-jala
 IMAGE_TAG  := latest
 ARGS       ?=
 
@@ -37,7 +37,7 @@ typecheck: ## Run mypy against sources and tests
 check: lint typecheck test ## Run lint, typecheck and tests in sequence
 
 run: ## Run the CLI (usage: make run ARGS="factorial 5")
-	$(UV) run math-utils $(ARGS)
+	$(UV) run math-toolkit-jala $(ARGS)
 
 clean: ## Remove build, test and cache artifacts
 	rm -rf build dist htmlcov .coverage .coverage.* .pytest_cache .mypy_cache .ruff_cache
@@ -51,4 +51,4 @@ docker-build: ## Build the Docker image
 	docker build -t $(IMAGE_NAME):$(IMAGE_TAG) .
 
 docker-run: ## Run the CLI inside Docker (usage: make docker-run ARGS="factorial 5")
-	docker compose run --rm math-utils $(ARGS)
+	docker compose run --rm math-toolkit-jala $(ARGS)
