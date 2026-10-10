@@ -16,7 +16,7 @@ Handler = Callable[[argparse.Namespace], str]
 
 def _build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
-        prog="math-utils",
+        prog="math-toolkit-jala",
         description="Mathematical utilities from the math_utils package.",
     )
     parser.add_argument(
@@ -81,7 +81,7 @@ def _build_parser() -> argparse.ArgumentParser:
 
 
 def main(argv: Sequence[str] | None = None) -> int:
-    """Entry point for the ``math-utils`` console script.
+    """Entry point for the ``math-toolkit-jala`` console script.
 
     Returns:
         ``0`` on success, ``1`` when a domain error is raised.

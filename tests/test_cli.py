@@ -50,4 +50,4 @@ class TestVersionFlag:
             main(["--version"])
         assert exc_info.value.code == 0
         captured = capsys.readouterr()
-        assert "math-utils" in captured.out
+        assert "math-toolkit-jala" in captured.out
