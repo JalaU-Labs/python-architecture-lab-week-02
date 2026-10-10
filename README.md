@@ -40,6 +40,7 @@ comprehensive testing, and reproducible tooling.
 ├── tests/
 │   ├── __init__.py
 │   ├── test_arithmetic.py
+│   ├── test_cli.py
 │   └── test_statistics.py
 ├── .dockerignore
 ├── .gitignore
@@ -73,7 +74,7 @@ with its development dependencies:
 ```bash
 git clone git@gitlab.com:jala-university1/cohort-5/ES.CSSD-245.GA.T2.26.M2/SD/group-b/individual-laboratories/alejandro-botina/week-02/python-architecture-lab-week-02.git
 cd python-architecture-lab-week-02
-uv sync --all-extras --dev
+uv sync
 ```
 
 ## Usage
