@@ -19,7 +19,8 @@ comprehensive testing, and reproducible tooling.
 - Comprehensive test suite powered by `pytest`.
 - Deterministic dependency management via `uv` and `uv.lock`.
 - Linting and formatting with `ruff`.
-- Reproducible container image built with a multi-stage `Dockerfile`.
+- Reproducible container image built with a multi-stage `Dockerfile`
+  and published to the GitHub Container Registry.
 - Convenience targets for common workflows via `Makefile`.
 
 ## Project Structure
@@ -136,13 +137,47 @@ make clean
 
 ## Docker
 
+### Pull the published image from GHCR
+
+The image is published publicly to the GitHub Container Registry on every
+push to `main` and on every `v*` tag. The package is public, so no
+authentication is required to pull it:
+
+```bash
+docker pull ghcr.io/jalau-labs/python-architecture-lab-week-02:latest
+```
+
+Run the CLI directly with the published image:
+
+```bash
+docker run --rm ghcr.io/jalau-labs/python-architecture-lab-week-02:latest factorial 5
+docker run --rm ghcr.io/jalau-labs/python-architecture-lab-week-02:latest is-prime 97
+docker run --rm ghcr.io/jalau-labs/python-architecture-lab-week-02:latest mean 1 2 3 4 5
+```
+
+The following tags are published:
+
+| Tag | Description |
+| --- | --- |
+| `latest` | Most recent build from the default branch. |
+| `main` | Latest commit pushed to the `main` branch. |
+| `sha-<short>` | Immutable reference to a specific commit. |
+| `vX.Y.Z` | Semver tag, published when a `v*` Git tag is pushed. |
+
+The image uses `math-utils` as its `ENTRYPOINT`, so any argument passed
+to `docker run` is forwarded directly to the CLI.
+
+### Build the image locally
+
 Build the runtime image:
 
 ```bash
 docker build -t math-utils:latest .
 ```
 
-Run the CLI inside the container through Docker Compose:
+### Run with Docker Compose
+
+Run the CLI through Docker Compose using the locally built image:
 
 ```bash
 docker compose run --rm math-utils factorial 10
