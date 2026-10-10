@@ -41,7 +41,7 @@ uv run math-toolkit-jala factorial -1
 ## Use inside another Python program
 
 ```python
-from math_utils import gcd, lcm, is_prime
+from math_toolkit_jala import gcd, lcm, is_prime
 
 # Simplify a fraction.
 numerator, denominator = 42, 56

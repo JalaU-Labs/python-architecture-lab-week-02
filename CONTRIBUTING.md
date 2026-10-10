@@ -45,7 +45,7 @@ To run the test suite alone:
 make test
 ```
 
-The project enforces 100% line and branch coverage on the `math_utils`
+The project enforces 100% line and branch coverage on the `math_toolkit_jala`
 package. Any change that reduces coverage below 100% is considered a
 regression.
 

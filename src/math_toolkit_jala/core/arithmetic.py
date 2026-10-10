@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from math_utils.exceptions import DomainError, InvalidInputError
+from math_toolkit_jala.exceptions import DomainError, InvalidInputError
 
 
 def _ensure_int(value: object, name: str) -> int:

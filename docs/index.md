@@ -17,7 +17,7 @@ images.
 - **Strict typing.** Every module ships a `py.typed` marker (PEP 561) and
   is checked with `mypy` in strict mode.
 - **Test-driven quality.** The test suite covers 100% of lines and
-  branches in the `math_utils` package.
+  branches in the `math_toolkit_jala` package.
 - **Reproducibility.** Dependencies are resolved deterministically via
   `uv.lock`. The container image is built from a multi-stage
   `Dockerfile` using the same lock file.

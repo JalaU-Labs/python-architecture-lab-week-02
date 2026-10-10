@@ -65,7 +65,7 @@ typecheck:
 test:
   stage: test
   script:
-    - uv run pytest --cov=math_utils --cov-report=term-missing
+    - uv run pytest --cov=math_toolkit_jala --cov-report=term-missing
   coverage: '/TOTAL\s+\d+\s+\d+\s+\d+\s+(\d+)%/'
   artifacts:
     when: always

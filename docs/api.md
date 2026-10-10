@@ -1,6 +1,6 @@
 # API Reference
 
-Every public function is exported from the top-level `math_utils`
+Every public function is exported from the top-level `math_toolkit_jala`
 package. The `core` subpackage contains the pure domain logic; the
 top-level re-exports exist for convenience.
 

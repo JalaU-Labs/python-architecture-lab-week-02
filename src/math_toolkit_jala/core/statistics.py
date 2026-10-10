@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from collections.abc import Sequence
 
-from math_utils.exceptions import DomainError
+from math_toolkit_jala.exceptions import DomainError
 
 
 def _ensure_non_empty(values: Sequence[float]) -> None:

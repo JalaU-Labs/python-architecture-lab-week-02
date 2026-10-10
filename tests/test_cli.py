@@ -1,10 +1,10 @@
-"""Integration tests for the math_utils command-line interface."""
+"""Integration tests for the math_toolkit_jala command-line interface."""
 
 from __future__ import annotations
 
 import pytest
 
-from math_utils.cli import main
+from math_toolkit_jala.cli import main
 
 
 class TestSuccessfulInvocations:

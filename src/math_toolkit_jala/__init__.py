@@ -1,12 +1,12 @@
-"""Public API for the math_utils package."""
+"""Public API for the math_toolkit_jala package."""
 
 from __future__ import annotations
 
 from importlib.metadata import PackageNotFoundError, version
 
-from math_utils.core.arithmetic import factorial, gcd, is_prime, lcm
-from math_utils.core.statistics import mean, median, variance
-from math_utils.exceptions import DomainError, InvalidInputError, MathUtilsError
+from math_toolkit_jala.core.arithmetic import factorial, gcd, is_prime, lcm
+from math_toolkit_jala.core.statistics import mean, median, variance
+from math_toolkit_jala.exceptions import DomainError, InvalidInputError, MathUtilsError
 
 try:
     __version__: str = version("math-toolkit-jala")

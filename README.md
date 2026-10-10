@@ -37,9 +37,9 @@ comprehensive testing, and reproducible tooling.
 ```
 .
 ├── src/
-│   └── math_utils/
+│   └── math_toolkit_jala/
 │       ├── __init__.py          # Public API re-exports and __version__
-│       ├── __main__.py          # Entry point for `python -m math_utils`
+│       ├── __main__.py          # Entry point for `python -m math_toolkit_jala`
 │       ├── cli.py               # Presentation layer (argparse)
 │       ├── exceptions.py        # Domain exception hierarchy
 │       ├── py.typed             # PEP 561 typing marker
@@ -131,14 +131,14 @@ math-toolkit-jala mean 1 2 3 4 5
 The equivalent module entry point works as well:
 
 ```bash
-python -m math_utils median 3 1 4 1 5 9 2 6
+python -m math_toolkit_jala median 3 1 4 1 5 9 2 6
 # 3.5
 ```
 
 ### Library
 
 ```python
-from math_utils import factorial, is_prime, mean
+from math_toolkit_jala import factorial, is_prime, mean
 
 assert factorial(5) == 120
 assert is_prime(97) is True
@@ -167,7 +167,7 @@ make test
 
 This executes `pytest` against the `tests/` directory with coverage
 reporting enabled. The project enforces 100% line and branch coverage on
-the `math_utils` package.
+the `math_toolkit_jala` package.
 
 ### Linting and formatting
 

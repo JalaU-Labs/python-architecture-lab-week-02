@@ -36,7 +36,7 @@ Issues = "https://gitlab.com/jala-university1/cohort-5/ES.CSSD-245.GA.T2.26.M2/S
 Mirror = "https://github.com/JalaU-Labs/python-architecture-lab-week-02"
 
 [project.scripts]
-math-toolkit-jala = "math_utils.cli:main"
+math-toolkit-jala = "math_toolkit_jala.cli:main"
 
 [build-system]
 requires = ["uv_build>=0.13.0,<0.14.0"]
@@ -71,7 +71,7 @@ select = [
 ignore = []
 
 [tool.ruff.lint.isort]
-known-first-party = ["math_utils"]
+known-first-party = ["math_toolkit_jala"]
 
 [tool.ruff.format]
 quote-style = "double"
@@ -99,7 +99,7 @@ pythonpath = ["src"]
 addopts = [
     "--strict-markers",
     "--strict-config",
-    "--cov=math_utils",
+    "--cov=math_toolkit_jala",
     "--cov-report=term-missing",
     "--cov-report=html:htmlcov",
 ]
@@ -109,7 +109,7 @@ markers = [
 
 [tool.coverage.run]
 branch = true
-source = ["src/math_utils"]
+source = ["src/math_toolkit_jala"]
 omit = ["*/__main__.py"]
 
 [tool.coverage.report]
@@ -126,5 +126,5 @@ skip_covered = false
 directory = "htmlcov"
 
 [tool.uv.build-backend]
-module-name = "math_utils"
+module-name = "math_toolkit_jala"
 module-root = "src"

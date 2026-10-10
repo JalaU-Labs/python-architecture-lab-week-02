@@ -26,14 +26,14 @@ uv run math-toolkit-jala mean 1 2 3 4 5
 The equivalent module entry point works as well:
 
 ```bash
-uv run python -m math_utils median 3 1 4 1 5 9 2 6
+uv run python -m math_toolkit_jala median 3 1 4 1 5 9 2 6
 # 3.5
 ```
 
 ## Use the library
 
 ```python
-from math_utils import factorial, is_prime, mean
+from math_toolkit_jala import factorial, is_prime, mean
 
 assert factorial(5) == 120
 assert is_prime(97) is True

@@ -1,4 +1,4 @@
-"""Command-line interface for the math_utils package."""
+"""Command-line interface for the math_toolkit_jala package."""
 
 from __future__ import annotations
 
@@ -6,10 +6,10 @@ import argparse
 import sys
 from collections.abc import Callable, Sequence
 
-from math_utils import __version__
-from math_utils.core.arithmetic import factorial, gcd, is_prime, lcm
-from math_utils.core.statistics import mean, median, variance
-from math_utils.exceptions import MathUtilsError
+from math_toolkit_jala import __version__
+from math_toolkit_jala.core.arithmetic import factorial, gcd, is_prime, lcm
+from math_toolkit_jala.core.statistics import mean, median, variance
+from math_toolkit_jala.exceptions import MathUtilsError
 
 Handler = Callable[[argparse.Namespace], str]
 
@@ -17,7 +17,7 @@ Handler = Callable[[argparse.Namespace], str]
 def _build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         prog="math-toolkit-jala",
-        description="Mathematical utilities from the math_utils package.",
+        description="Mathematical utilities from the math_toolkit_jala package.",
     )
     parser.add_argument(
         "--version",

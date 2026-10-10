@@ -1,10 +1,10 @@
-"""Domain-specific exceptions raised by the math_utils package."""
+"""Domain-specific exceptions raised by the math_toolkit_jala package."""
 
 from __future__ import annotations
 
 
 class MathUtilsError(Exception):
-    """Base class for every exception raised by math_utils."""
+    """Base class for every exception raised by math_toolkit_jala."""
 
 
 class InvalidInputError(MathUtilsError):

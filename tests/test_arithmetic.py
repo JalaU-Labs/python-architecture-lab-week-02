@@ -1,11 +1,11 @@
-"""Unit tests for :mod:`math_utils.core.arithmetic`."""
+"""Unit tests for :mod:`math_toolkit_jala.core.arithmetic`."""
 
 from __future__ import annotations
 
 import pytest
 
-from math_utils.core.arithmetic import factorial, gcd, is_prime, lcm
-from math_utils.exceptions import DomainError, InvalidInputError
+from math_toolkit_jala.core.arithmetic import factorial, gcd, is_prime, lcm
+from math_toolkit_jala.exceptions import DomainError, InvalidInputError
 
 
 class TestFactorial:
