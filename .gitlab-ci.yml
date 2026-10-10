@@ -9,17 +9,22 @@ stages:
 variables:
   UV_VERSION: "0.13.0"
   UV_CACHE_DIR: "$CI_PROJECT_DIR/.uv-cache"
+  PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"
 
 default:
-  image:
-    name: ghcr.io/astral-sh/uv:${UV_VERSION}
-    entrypoint: [""]
+  image: python:3.14-slim
   cache:
     key:
       files:
         - uv.lock
     paths:
       - .uv-cache/
+      - .cache/pip/
+  before_script:
+    - apt-get update && apt-get install -y --no-install-recommends curl ca-certificates
+    - curl -LsSf "https://astral.sh/uv/${UV_VERSION}/install.sh" | sh
+    - export PATH="$HOME/.local/bin:$PATH"
+    - uv sync --frozen
 
 # -----------------------------------------------------------------------------
 # Quality stage: lint, format, typecheck run in parallel
@@ -28,7 +33,6 @@ default:
 lint:
   stage: quality
   script:
-    - uv sync --frozen
     - uv run ruff check src tests
   rules:
     - if: $CI_PIPELINE_SOURCE == "merge_request_event"
@@ -38,7 +42,6 @@ lint:
 format:
   stage: quality
   script:
-    - uv sync --frozen
     - uv run ruff format --check src tests
   rules:
     - if: $CI_PIPELINE_SOURCE == "merge_request_event"
@@ -48,7 +51,6 @@ format:
 typecheck:
   stage: quality
   script:
-    - uv sync --frozen
     - uv run mypy src tests
   rules:
     - if: $CI_PIPELINE_SOURCE == "merge_request_event"
@@ -62,7 +64,6 @@ typecheck:
 test:
   stage: test
   script:
-    - uv sync --frozen
     - uv run pytest --cov=math_utils --cov-report=term-missing
   coverage: '/TOTAL\s+\d+\s+\d+\s+\d+\s+(\d+)%/'
   artifacts:
