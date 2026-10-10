@@ -3,37 +3,37 @@
 ## Compute a factorial
 
 ```bash
-uv run math-utils factorial 10
+uv run math-toolkit-jala factorial 10
 # 3628800
 ```
 
 ## Check primality
 
 ```bash
-uv run math-utils is-prime 7919
+uv run math-toolkit-jala is-prime 7919
 # true
 
-uv run math-utils is-prime 7917
+uv run math-toolkit-jala is-prime 7917
 # false
 ```
 
 ## Aggregate statistics
 
 ```bash
-uv run math-utils mean 1 2 3 4 5
+uv run math-toolkit-jala mean 1 2 3 4 5
 # 3.0
 
-uv run math-utils median 1 2 3 4
+uv run math-toolkit-jala median 1 2 3 4
 # 2.5
 
-uv run math-utils variance 1 2 3 4 5
+uv run math-toolkit-jala variance 1 2 3 4 5
 # 2.0
 ```
 
 ## Handle errors gracefully
 
 ```bash
-uv run math-utils factorial -1
+uv run math-toolkit-jala factorial -1
 # error: factorial is undefined for negative integers: -1
 # (exit code 1)
 ```

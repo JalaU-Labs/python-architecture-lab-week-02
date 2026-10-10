@@ -1,9 +1,9 @@
 # python-architecture-lab-week-02
 
 [![Python](https://img.shields.io/badge/python-3.14-blue.svg)](https://www.python.org/)
-[![PyPI](https://img.shields.io/pypi/v/math-utils.svg)](https://pypi.org/project/math-utils/)
-[![PyPI - Downloads](https://img.shields.io/pypi/dm/math-utils.svg)](https://pypi.org/project/math-utils/)
-[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/math-utils.svg)](https://pypi.org/project/math-utils/)
+[![PyPI](https://img.shields.io/pypi/v/math-toolkit-jala.svg)](https://pypi.org/project/math-toolkit-jala/)
+[![PyPI - Downloads](https://img.shields.io/pypi/dm/math-toolkit-jala.svg)](https://pypi.org/project/math-toolkit-jala/)
+[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/math-toolkit-jala.svg)](https://pypi.org/project/math-toolkit-jala/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![CI](https://github.com/JalaU-Labs/python-architecture-lab-week-02/actions/workflows/ci.yml/badge.svg)](https://github.com/JalaU-Labs/python-architecture-lab-week-02/actions/workflows/ci.yml)
 [![Docs](https://github.com/JalaU-Labs/python-architecture-lab-week-02/actions/workflows/docs.yml/badge.svg)](https://github.com/JalaU-Labs/python-architecture-lab-week-02/actions/workflows/docs.yml)
@@ -26,7 +26,7 @@ comprehensive testing, and reproducible tooling.
 - Linting and formatting with `ruff`.
 - Reproducible container image built with a multi-stage `Dockerfile`
   and published to the GitHub Container Registry.
-- Published on PyPI as `math-utils`.
+- Published on PyPI as `math-toolkit-jala`.
 - Documentation site built with MkDocs and Material, deployed to both
   GitHub Pages and GitLab Pages.
 - Continuous integration on GitHub Actions and GitLab CI.
@@ -94,11 +94,11 @@ test and reuse.
 The package is published on PyPI. Install it with `pip` or `uv`:
 
 ```bash
-pip install math-utils
+pip install math-toolkit-jala
 ```
 
 ```bash
-uv add math-utils
+uv add math-toolkit-jala
 ```
 
 ### From source
@@ -115,16 +115,16 @@ uv sync
 
 ### Command-line interface
 
-The package exposes a `math-utils` console script:
+The package exposes a `math-toolkit-jala` console script:
 
 ```bash
-math-utils factorial 5
+math-toolkit-jala factorial 5
 # 120
 
-math-utils is-prime 97
+math-toolkit-jala is-prime 97
 # true
 
-math-utils mean 1 2 3 4 5
+math-toolkit-jala mean 1 2 3 4 5
 # 3.0
 ```
 
@@ -223,19 +223,19 @@ The following tags are published:
 | `sha-<short>` | Immutable reference to a specific commit. |
 | `vX.Y.Z` | Semver tag, published when a `v*` Git tag is pushed. |
 
-The image uses `math-utils` as its `ENTRYPOINT`, so any argument passed
+The image uses `math-toolkit-jala` as its `ENTRYPOINT`, so any argument passed
 to `docker run` is forwarded directly to the CLI.
 
 ### Build the image locally
 
 ```bash
-docker build -t math-utils:latest .
+docker build -t math-toolkit-jala:latest .
 ```
 
 ### Run with Docker Compose
 
 ```bash
-docker compose run --rm math-utils factorial 10
+docker compose run --rm math-toolkit-jala factorial 10
 ```
 
 The image is built using a multi-stage `Dockerfile`: the first stage

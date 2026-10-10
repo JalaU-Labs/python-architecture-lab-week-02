@@ -1,4 +1,4 @@
-# math-utils
+# math-toolkit-jala
 
 A small, well-structured Python package of mathematical utilities built as
 the Week 02 laboratory for the Software Development 4 course at Jala

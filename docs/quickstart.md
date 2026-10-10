@@ -13,13 +13,13 @@ uv sync
 ## Run the CLI
 
 ```bash
-uv run math-utils factorial 5
+uv run math-toolkit-jala factorial 5
 # 120
 
-uv run math-utils is-prime 97
+uv run math-toolkit-jala is-prime 97
 # true
 
-uv run math-utils mean 1 2 3 4 5
+uv run math-toolkit-jala mean 1 2 3 4 5
 # 3.0
 ```
 
