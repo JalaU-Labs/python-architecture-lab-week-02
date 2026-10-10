@@ -109,6 +109,7 @@ markers = [
 [tool.coverage.run]
 branch = true
 source = ["src/math_utils"]
+omit = ["*/__main__.py"]
 
 [tool.coverage.report]
 exclude_lines = [
