@@ -81,3 +81,40 @@ class TestDemoCommand:
         assert "gcd(12, 18) = 6" in captured.out
         assert "is_prime(97) = True" in captured.out
         assert "mean(1.0, 2.0, 3.0, 4.0, 5.0) = 3.0" in captured.out
+
+
+class TestHistoryWithEntries:
+    """Exercise the history and clear-history commands with a shared context.
+
+    Because ``main`` builds a fresh context on every call by default, we
+    inject a shared context to make the history survive between
+    invocations of the CLI.
+    """
+
+    def _make_shared_context(self) -> CommandContext:
+        from math_toolkit_jala.presentation.cli import _build_context
+
+        return _build_context()
+
+    def test_history_lists_recorded_calculations(self, capsys: pytest.CaptureFixture[str]) -> None:
+        ctx = self._make_shared_context()
+        assert main(["factorial", "5"], ctx=ctx) == 0
+        assert main(["gcd", "12", "18"], ctx=ctx) == 0
+        capsys.readouterr()  # discard the output of the two operations
+        exit_code = main(["history"], ctx=ctx)
+        captured = capsys.readouterr()
+        assert exit_code == 0
+        assert "factorial(5) = 120" in captured.out
+        assert "gcd(12, 18) = 6" in captured.out
+
+    def test_clear_history_empties_the_shared_context(
+        self, capsys: pytest.CaptureFixture[str]
+    ) -> None:
+        ctx = self._make_shared_context()
+        main(["factorial", "5"], ctx=ctx)
+        capsys.readouterr()
+        assert main(["clear-history"], ctx=ctx) == 0
+        capsys.readouterr()
+        main(["history"], ctx=ctx)
+        captured = capsys.readouterr()
+        assert "no calculations recorded" in captured.out

@@ -211,18 +211,27 @@ def _build_parser() -> argparse.ArgumentParser:
     return parser
 
 
-def main(argv: Sequence[str] | None = None) -> int:
-    """Entry point for the ``math-toolkit-jala`` console script."""
+def main(
+    argv: Sequence[str] | None = None,
+    ctx: CommandContext | None = None,
+) -> int:
+    """Entry point for the ``math-toolkit-jala`` console script.
+
+    Args:
+        argv: Optional argument list. Defaults to ``sys.argv[1:]``.
+        ctx: Optional pre-built command context. When provided, the same
+            context (and therefore the same in-memory history) is reused
+            across calls. This is what makes the ``history`` and
+            ``clear-history`` commands testable in isolation.
+    """
     parser = _build_parser()
     args = parser.parse_args(argv)
-    ctx = _build_context()
+    context = ctx if ctx is not None else _build_context()
     handler = _HANDLERS[args.command]
     try:
-        output = handler(args, ctx)
+        output = handler(args, context)
     except MathUtilsError as exc:
         print(f"error: {exc}", file=sys.stderr)
         return 1
     print(output)
     return 0
-
-
