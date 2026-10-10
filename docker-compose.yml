@@ -1,0 +1,10 @@
+services:
+  math-utils:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: math-utils:latest
+    container_name: math-utils
+    # The image already sets ENTRYPOINT ["math-utils"]. Passing arguments via
+    # `docker compose run --rm math-utils <args>` overrides CMD only, keeping
+    # the entrypoint intact.

@@ -1,0 +1,56 @@
+# Git
+.git
+.gitignore
+
+# Python bytecode and caches
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments (rebuilt inside the image)
+.venv/
+venv/
+ENV/
+env/
+
+# Build artifacts
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# Test and coverage artifacts (not needed at runtime)
+tests/
+htmlcov/
+.coverage
+.coverage.*
+.pytest_cache/
+coverage.xml
+
+# Tooling caches
+.mypy_cache/
+.dmypy.json
+.ruff_cache/
+.tox/
+.nox/
+
+# IDE and editor metadata
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Operating system artifacts
+.DS_Store
+Thumbs.db
+
+# Docker-related files (not needed in the build context)
+Dockerfile
+.dockerignore
+docker-compose.yml
+
+# CI and VCS metadata
+.github/
+.gitlab/
+.gitlab-ci.yml
