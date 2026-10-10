@@ -83,7 +83,7 @@ test:
 # automatically published at the Pages URL of this project.
 # -----------------------------------------------------------------------------
 
-docs:
+pages:
   stage: docs
   script:
     - uv run mkdocs build --strict --site-dir public
