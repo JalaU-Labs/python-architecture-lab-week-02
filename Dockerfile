@@ -27,7 +27,7 @@ COPY pyproject.toml uv.lock README.md LICENSE ./
 COPY src ./src
 
 RUN --mount=type=cache,target=/root/.cache/uv \
-    uv sync --locked --no-dev
+    uv sync --locked --no-dev --no-editable
 
 # -----------------------------------------------------------------------------
 # Stage 2: runtime
