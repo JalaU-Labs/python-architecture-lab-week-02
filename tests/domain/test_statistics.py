@@ -1,11 +1,11 @@
-"""Unit tests for :mod:`math_toolkit_jala.core.statistics`."""
+"""Unit tests for :mod:`math_toolkit_jala.domain.statistics`."""
 
 from __future__ import annotations
 
 import pytest
 
-from math_toolkit_jala.core.statistics import mean, median, variance
-from math_toolkit_jala.exceptions import DomainError
+from math_toolkit_jala.domain.statistics import mean, median, variance
+from math_toolkit_jala.domain.exceptions import DomainError
 
 
 class TestMean:
