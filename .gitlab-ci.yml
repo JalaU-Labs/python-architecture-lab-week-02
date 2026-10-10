@@ -1,4 +1,4 @@
-# GitLab CI/CD pipeline for math-utils
+# GitLab CI/CD pipeline for math-toolkit-jala
 # Mirrors the GitHub Actions workflow: lint, format, typecheck, and tests.
 # Image publishing is handled exclusively by the GitHub Actions workflow.
 

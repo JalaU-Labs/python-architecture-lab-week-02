@@ -9,7 +9,7 @@ from math_utils.core.statistics import mean, median, variance
 from math_utils.exceptions import DomainError, InvalidInputError, MathUtilsError
 
 try:
-    __version__: str = version("math-utils")
+    __version__: str = version("math-toolkit-jala")
 except PackageNotFoundError:  # pragma: no cover - only hit when running from source
     __version__ = "0.0.0"
 

@@ -41,7 +41,7 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: pypi
-      url: https://pypi.org/project/math-utils/
+      url: https://pypi.org/project/math-toolkit-jala/
     permissions:
       id-token: write
     steps:
