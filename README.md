@@ -10,18 +10,25 @@
 [![Code style: ruff](https://img.shields.io/badge/code%20style-ruff-000000.svg)](https://github.com/astral-sh/ruff)
 [![Type checked: mypy](https://img.shields.io/badge/type%20checked-mypy-blue.svg)](https://mypy-lang.org/)
 
-A small, well-structured Python package of mathematical utilities built as
-the Week 02 laboratory for the Software Development 4 course at Jala
-University. Its primary purpose is to demonstrate professional software
-architecture practices: layered design, pure domain logic, strict typing,
-comprehensive testing, and reproducible tooling.
+A small, well-structured Python package of mathematical utilities built
+as the Week 02 laboratory for the Software Development 4 course at Jala
+University. The package is organized into the four layers of Clean
+Architecture (Domain, Application, Infrastructure, and Presentation) and
+demonstrates professional practices across the entire delivery pipeline.
 
 ## Features
 
-- Pure, side-effect-free mathematical functions in a dedicated core layer.
-- Strict static typing enforced by `mypy` with `py.typed` marker (PEP 561).
+- Four-layer Clean Architecture with a strict inward-pointing dependency
+  rule.
+- Pure, side-effect-free mathematical functions in a dedicated domain
+  layer.
+- Use cases that orchestrate the domain and depend only on abstract
+  ports.
+- An in-memory repository adapter that satisfies the history port.
+- Strict static typing enforced by `mypy` with a `py.typed` marker
+  (PEP 561).
 - Command-line interface built on the standard library `argparse`.
-- Comprehensive test suite powered by `pytest` with 100% line and branch coverage.
+- Comprehensive test suite with 100% line and branch coverage.
 - Deterministic dependency management via `uv` and `uv.lock`.
 - Linting and formatting with `ruff`.
 - Reproducible container image built with a multi-stage `Dockerfile`
@@ -32,28 +39,69 @@ comprehensive testing, and reproducible tooling.
 - Continuous integration on GitHub Actions and GitLab CI.
 - Convenience targets for common workflows via `Makefile`.
 
+## Architecture
+
+The source code is organized into four packages that mirror the four
+layers of Clean Architecture:
+
+| Layer | Package | Responsibility |
+| --- | --- | --- |
+| Domain | `math_toolkit_jala.domain` | Pure mathematical rules, `Calculation` entity, exception hierarchy. |
+| Application | `math_toolkit_jala.application` | Ports and use case classes. |
+| Infrastructure | `math_toolkit_jala.infrastructure` | In-memory repository and system clock adapters. |
+| Presentation | `math_toolkit_jala.presentation` | `argparse`-based CLI. |
+
+Dependencies always point inward: the domain knows nothing about the
+other layers, the application depends only on the domain and on abstract
+ports, and the infrastructure and presentation layers depend on the inner
+layers. The composition root lives in
+`math_toolkit_jala.presentation.cli` and is the only place where all four
+layers are instantiated together.
+
 ## Project Structure
 
 ```
 .
 ├── src/
 │   └── math_toolkit_jala/
-│       ├── __init__.py          # Public API re-exports and __version__
-│       ├── __main__.py          # Entry point for `python -m math_toolkit_jala`
-│       ├── cli.py               # Presentation layer (argparse)
-│       ├── exceptions.py        # Domain exception hierarchy
-│       ├── py.typed             # PEP 561 typing marker
-│       └── core/                # Pure domain logic
+│       ├── __init__.py              # Public API re-exports and __version__
+│       ├── __main__.py              # Entry point for `python -m math_toolkit_jala`
+│       ├── py.typed                 # PEP 561 typing marker
+│       ├── domain/                  # Business rules and entities
+│       │   ├── __init__.py
+│       │   ├── arithmetic.py
+│       │   ├── entities.py
+│       │   ├── exceptions.py
+│       │   └── statistics.py
+│       ├── application/             # Use cases and ports
+│       │   ├── __init__.py
+│       │   ├── ports.py
+│       │   └── use_cases.py
+│       ├── infrastructure/          # Concrete adapters
+│       │   ├── __init__.py
+│       │   ├── clock.py
+│       │   └── in_memory.py
+│       └── presentation/            # CLI
 │           ├── __init__.py
-│           ├── arithmetic.py
-│           └── statistics.py
+│           └── cli.py
 ├── tests/
 │   ├── __init__.py
-│   ├── test_arithmetic.py
-│   ├── test_cli.py
-│   └── test_statistics.py
+│   ├── test_public_api.py
+│   ├── domain/
+│   │   ├── test_arithmetic.py
+│   │   ├── test_entities.py
+│   │   ├── test_exceptions.py
+│   │   └── test_statistics.py
+│   ├── application/
+│   │   └── test_use_cases.py
+│   ├── infrastructure/
+│   │   ├── test_clock.py
+│   │   └── test_in_memory.py
+│   └── presentation/
+│       └── test_cli.py
 ├── docs/
 │   ├── api.md
+│   ├── architecture.md
 │   ├── examples.md
 │   ├── index.md
 │   └── quickstart.md
@@ -64,6 +112,7 @@ comprehensive testing, and reproducible tooling.
 ├── .dockerignore
 ├── .gitignore
 ├── .python-version
+├── CHANGELOG.md
 ├── CONTRIBUTING.md
 ├── Dockerfile
 ├── docker-compose.yml
@@ -75,12 +124,6 @@ comprehensive testing, and reproducible tooling.
 └── uv.lock
 ```
 
-The `core` package contains pure functions with no knowledge of the
-command-line interface, the filesystem, or any external system. The `cli`
-module is the only place that performs I/O and translates user input into
-calls against the core. This separation keeps the domain logic trivial to
-test and reuse.
-
 ## Requirements
 
 - Python 3.14 or newer
@@ -90,8 +133,6 @@ test and reuse.
 ## Installation
 
 ### From PyPI
-
-The package is published on PyPI. Install it with `pip` or `uv`:
 
 ```bash
 pip install math-toolkit-jala
@@ -103,8 +144,6 @@ uv add math-toolkit-jala
 
 ### From source
 
-Clone the repository and install it in editable mode with `uv`:
-
 ```bash
 git clone git@gitlab.com:jala-university1/cohort-5/ES.CSSD-245.GA.T2.26.M2/SD/group-b/individual-laboratories/alejandro-botina/week-02/python-architecture-lab-week-02.git
 cd python-architecture-lab-week-02
@@ -115,24 +154,12 @@ uv sync
 
 ### Command-line interface
 
-The package exposes a `math-toolkit-jala` console script:
-
 ```bash
-math-toolkit-jala factorial 5
-# 120
-
-math-toolkit-jala is-prime 97
-# true
-
-math-toolkit-jala mean 1 2 3 4 5
-# 3.0
-```
-
-The equivalent module entry point works as well:
-
-```bash
-python -m math_toolkit_jala median 3 1 4 1 5 9 2 6
-# 3.5
+math-toolkit-jala factorial 5     # 120
+math-toolkit-jala is-prime 97     # true
+math-toolkit-jala mean 1 2 3 4 5  # 3.0
+math-toolkit-jala demo            # shows the whole stack in action
+math-toolkit-jala history         # prints the session's calculation history
 ```
 
 ### Library
@@ -145,86 +172,46 @@ assert is_prime(97) is True
 assert mean([1, 2, 3, 4, 5]) == 3.0
 ```
 
-## Documentation
+### Use cases and infrastructure
 
-The full documentation is available at:
+```python
+from math_toolkit_jala.application import ComputeFactorialUseCase
+from math_toolkit_jala.infrastructure import (
+    InMemoryCalculationHistory,
+    SystemClock,
+)
+
+history = InMemoryCalculationHistory()
+use_case = ComputeFactorialUseCase(history, SystemClock())
+use_case.execute(5)
+print(history.all()[0].formatted())  # factorial(5) = 120
+```
+
+## Documentation
 
 - GitHub Pages: [https://jalau-labs.github.io/python-architecture-lab-week-02/](https://jalau-labs.github.io/python-architecture-lab-week-02/)
 - GitLab Pages: [https://jala-university1.pages.gitlab.com/cohort-5/ES.CSSD-245.GA.T2.26.M2/SD/group-b/individual-laboratories/alejandro-botina/week-02/python-architecture-lab-week-02/](https://jala-university1.pages.gitlab.com/cohort-5/ES.CSSD-245.GA.T2.26.M2/SD/group-b/individual-laboratories/alejandro-botina/week-02/python-architecture-lab-week-02/)
 
-It covers installation, the CLI, the full API reference, and examples.
-
 ## Development
 
-All routine tasks are wrapped in the `Makefile`. Run `make help` to list
-the available targets.
-
-### Running tests
-
 ```bash
-make test
-```
-
-This executes `pytest` against the `tests/` directory with coverage
-reporting enabled. The project enforces 100% line and branch coverage on
-the `math_toolkit_jala` package.
-
-### Linting and formatting
-
-```bash
-make lint      # ruff check
-make format    # ruff format
-```
-
-### Type checking
-
-```bash
-make typecheck # mypy src
-```
-
-### Documentation
-
-```bash
-make docs-serve   # serve with live reload at http://127.0.0.1:8000
-make docs-build   # build the static site into site/
-```
-
-### Cleaning build artifacts
-
-```bash
-make clean
+make help         # list every available target
+make check        # ruff check + mypy + pytest with 100% coverage
+make format       # ruff format + ruff check --fix
+make docs-serve   # live-reload documentation at http://127.0.0.1:8000
+make docs-build   # build the static documentation site
 ```
 
 ## Docker
 
 ### Pull the published image from GHCR
 
-The image is published publicly to the GitHub Container Registry on every
-push to `main` and on every `v*` tag. The package is public, so no
-authentication is required to pull it:
-
 ```bash
 docker pull ghcr.io/jalau-labs/python-architecture-lab-week-02:latest
-```
-
-Run the CLI directly with the published image:
-
-```bash
 docker run --rm ghcr.io/jalau-labs/python-architecture-lab-week-02:latest factorial 5
-# 120
 ```
 
-The following tags are published:
-
-| Tag | Description |
-| --- | --- |
-| `latest` | Most recent build from the default branch. |
-| `main` | Latest commit pushed to the `main` branch. |
-| `sha-<short>` | Immutable reference to a specific commit. |
-| `vX.Y.Z` | Semver tag, published when a `v*` Git tag is pushed. |
-
-The image uses `math-toolkit-jala` as its `ENTRYPOINT`, so any argument passed
-to `docker run` is forwarded directly to the CLI.
+The image is public; no authentication is required.
 
 ### Build the image locally
 
@@ -238,13 +225,7 @@ docker build -t math-toolkit-jala:latest .
 docker compose run --rm math-toolkit-jala factorial 10
 ```
 
-The image is built using a multi-stage `Dockerfile`: the first stage
-installs dependencies with `uv` into a virtual environment, and the final
-stage copies only the runtime artifacts into a slim base image.
-
 ## Continuous Integration
-
-Every push to `main` and every merge request triggers:
 
 | Platform | Pipeline | Jobs |
 | --- | --- | --- |
@@ -253,15 +234,10 @@ Every push to `main` and every merge request triggers:
 | GitHub Actions | `publish.yml` | build and publish to PyPI on `v*` tags |
 | GitLab CI | `.gitlab-ci.yml` | docs (Pages), lint, format, typecheck, test |
 
-Both platforms enforce the same quality gate: `ruff check`, `ruff format --check`,
-`mypy`, and `pytest` with 100% coverage.
-
 ## Contributing
 
-See [CONTRIBUTING.md](CONTRIBUTING.md) for the full workflow: cloning,
-running tests, code style, and submitting changes.
+See [CONTRIBUTING.md](CONTRIBUTING.md) and [CHANGELOG.md](CHANGELOG.md).
 
 ## License
 
-This project is licensed under the MIT License. See [LICENSE](LICENSE)
-for details.
+MIT. See [LICENSE](LICENSE).

@@ -34,6 +34,7 @@ theme:
 nav:
   - Home: index.md
   - Quickstart: quickstart.md
+  - Architecture: architecture.md
   - API Reference: api.md
   - Examples: examples.md
 

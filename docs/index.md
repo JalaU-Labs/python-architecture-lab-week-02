@@ -11,9 +11,10 @@ images.
 
 ## Design principles
 
-- **Layered architecture.** The `core` package contains pure,
-  side-effect-free functions. The `cli` module is the only place that
-  performs I/O and translates user input into calls against the core.
+- **Layered architecture.** The package is organized into four layers
+  that follow the dependency rule of Clean Architecture: `domain`,
+  `application`, `infrastructure`, and `presentation`. Dependencies
+  always point inward, toward the domain.
 - **Strict typing.** Every module ships a `py.typed` marker (PEP 561) and
   is checked with `mypy` in strict mode.
 - **Test-driven quality.** The test suite covers 100% of lines and
@@ -24,6 +25,8 @@ images.
 
 ## Next steps
 
+- [Architecture](architecture.md) — the four layers and the dependency
+  rule.
 - [Quickstart](quickstart.md) — install the package and run your first
   command in under a minute.
 - [API Reference](api.md) — every public function, with signatures and

@@ -49,6 +49,24 @@ docker run --rm ghcr.io/jalau-labs/python-architecture-lab-week-02:latest factor
 # 120
 ```
 
+## Inspect the history
+
+Every operation performed in the current session is recorded in an
+in-memory history. Use the `history` subcommand to inspect it and
+`clear-history` to reset it:
+
+```bash
+uv run math-toolkit-jala history
+uv run math-toolkit-jala clear-history
+```
+
+The `demo` subcommand runs a fixed sequence of operations and prints the
+resulting history, demonstrating the four layers in a single invocation:
+
+```bash
+uv run math-toolkit-jala demo
+```
+
 ## Next steps
 
 - Read the [API Reference](api.md) for the full list of functions.

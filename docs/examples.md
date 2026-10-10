@@ -54,3 +54,36 @@ while not is_prime(candidate):
     candidate += 1
 print(candidate)  # 101
 ```
+## Inspect the calculation history
+
+```bash
+uv run math-toolkit-jala demo
+```
+
+This runs `factorial(5)`, `gcd(12, 18)`, `is_prime(97)`, and
+`mean(1, 2, 3, 4, 5)` through the use cases and prints the recorded
+history:
+
+```
+Demonstration of Clean Architecture layers:
+
+  factorial(5) = 120
+  gcd(12, 18) = 6
+  is_prime(97) = True
+  mean(1.0, 2.0, 3.0, 4.0, 5.0) = 3.0
+```
+
+## Use the use cases directly
+
+```python
+from math_toolkit_jala.application import ComputeFactorialUseCase
+from math_toolkit_jala.infrastructure import (
+    InMemoryCalculationHistory,
+    SystemClock,
+)
+
+history = InMemoryCalculationHistory()
+use_case = ComputeFactorialUseCase(history, SystemClock())
+assert use_case.execute(5) == 120
+assert history.all()[0].formatted() == "factorial(5) = 120"
+```
