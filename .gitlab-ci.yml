@@ -8,11 +8,12 @@ stages:
 
 variables:
   UV_VERSION: "0.13.0"
-  PYTHON_VERSION: "3.14"
   UV_CACHE_DIR: "$CI_PROJECT_DIR/.uv-cache"
 
 default:
-  image: ghcr.io/astral-sh/uv:${UV_VERSION}
+  image:
+    name: ghcr.io/astral-sh/uv:${UV_VERSION}
+    entrypoint: [""]
   cache:
     key:
       files:
