@@ -7,7 +7,13 @@ IMAGE_NAME := math-utils
 IMAGE_TAG  := latest
 ARGS       ?=
 
-.PHONY: help install test lint format typecheck check run clean build docker-build docker-run
+docs-serve: ## Serve the documentation locally with live reload
+	$(UV) run mkdocs serve
+
+docs-build: ## Build the documentation site
+	$(UV) run mkdocs build --strict
+
+.PHONY: help install test lint format typecheck check run clean build docker-build docker-run docs-serve docs-build
 
 help: ## Display this help message
 	@awk 'BEGIN {FS = ":.*?## "; printf "Usage: make <target>\n\n"} /^[a-zA-Z_-]+:.*?## / {printf "  \033[36m%-16s\033[0m %s\n", $$1, $$2}' $(MAKEFILE_LIST)
