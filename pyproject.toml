@@ -124,3 +124,7 @@ skip_covered = false
 
 [tool.coverage.html]
 directory = "htmlcov"
+
+[tool.uv.build-backend]
+module-name = "math_utils"
+module-root = "src"
