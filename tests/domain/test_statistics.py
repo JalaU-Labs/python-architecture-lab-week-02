@@ -4,8 +4,8 @@ from __future__ import annotations
 
 import pytest
 
-from math_toolkit_jala.domain.statistics import mean, median, variance
 from math_toolkit_jala.domain.exceptions import DomainError
+from math_toolkit_jala.domain.statistics import mean, median, variance
 
 
 class TestMean:
