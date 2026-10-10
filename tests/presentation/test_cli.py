@@ -4,7 +4,11 @@ from __future__ import annotations
 
 import pytest
 
-from math_toolkit_jala.presentation.cli import main
+from math_toolkit_jala.presentation.cli import (
+    CommandContext,
+    _build_context,
+    main,
+)
 
 
 class TestSuccessfulInvocations:
@@ -92,8 +96,6 @@ class TestHistoryWithEntries:
     """
 
     def _make_shared_context(self) -> CommandContext:
-        from math_toolkit_jala.presentation.cli import _build_context
-
         return _build_context()
 
     def test_history_lists_recorded_calculations(self, capsys: pytest.CaptureFixture[str]) -> None:
