@@ -3,6 +3,7 @@
 # Image publishing is handled exclusively by the GitHub Actions workflow.
 
 stages:
+  - docs
   - quality
   - test
 
@@ -75,3 +76,20 @@ test:
     - if: $CI_PIPELINE_SOURCE == "merge_request_event"
     - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
     - if: $CI_COMMIT_TAG
+
+# -----------------------------------------------------------------------------
+# Docs stage: build the MkDocs site and publish it via GitLab Pages.
+# The `pages` job name is reserved by GitLab and its `public/` artifact is
+# automatically published at the Pages URL of this project.
+# -----------------------------------------------------------------------------
+
+docs:
+  stage: docs
+  script:
+    - uv run mkdocs build --strict --site-dir public
+  artifacts:
+    paths:
+      - public/
+    expire_in: 1 week
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
